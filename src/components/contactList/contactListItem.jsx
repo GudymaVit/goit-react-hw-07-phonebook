@@ -8,7 +8,10 @@ const ContactListItem = ({ contact, onDelete }) => (
 );
 
 ContactListItem.propTypes = {
-  contact: PropTypes.objectOf(PropTypes.string).isRequired,
+  contact: PropTypes.shape({
+    name: PropTypes.string,
+    number: PropTypes.string,
+  }).isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
