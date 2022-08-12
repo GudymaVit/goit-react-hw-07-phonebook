@@ -1,4 +1,5 @@
 .filter_label{
+        display: contents;
     text-align: center;
     color: inherit;
 }

@@ -9,7 +9,7 @@ label{
         color: #525455;
 }
 .container{
-  width: 300px;
+  width: 350px;
     height: auto;
     display: flex;
     flex-direction: column;
