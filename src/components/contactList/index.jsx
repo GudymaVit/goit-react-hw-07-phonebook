@@ -1,37 +1,41 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact, getContact, getFilter } from 'redux/contactSlice';
+import { useSelector } from 'react-redux';
+import { getFiltered } from 'redux/filterSlice';
+import {
+  useGetContactsQuery,
+  useDeleteContactMutation,
+} from 'redux/contactsApi';
 
 import styles from './contactList.module.css';
 
 const ContactList = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContact);
-  const filter = useSelector(getFilter);
+  const { data } = useGetContactsQuery();
+  const [deleteContact] = useDeleteContactMutation();
+  const filter = useSelector(getFiltered);
 
   const filterContacts = () => {
+    if (filter === '') {
+      return data;
+    }
     const normalizedText = filter.toLowerCase();
-    return contacts.filter(({ name }) =>
+    return data.filter(({ name }) =>
       name.toLowerCase().includes(normalizedText)
     );
-  };
-
-  const deleteContactClick = id => {
-    dispatch(deleteContact(id));
   };
 
   const filteredContacts = filterContacts();
 
   return (
     <ul className={styles.contact_list}>
-      {filteredContacts.map(contact => (
-        <li key={contact.id}>
-          {contact.name} {contact.number}
-          <button type="button" onClick={() => deleteContactClick(contact.id)}>
-            Delete user
-          </button>
-        </li>
-      ))}
+      {data &&
+        filteredContacts.map(contact => (
+          <li key={contact.id}>
+            {contact.name} {contact.phone}
+            <button type="button" onClick={() => deleteContact(contact.id)}>
+              Delete user
+            </button>
+          </li>
+        ))}
     </ul>
   );
 };
