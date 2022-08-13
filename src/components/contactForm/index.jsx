@@ -19,7 +19,7 @@ const ContactForm = () => {
     }
   };
 
-  const submitForm = (name, number) => {
+  const submitForm = (name, phone) => {
     const addingExistingName = data.some(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
@@ -29,14 +29,13 @@ const ContactForm = () => {
       return;
     }
     addContact({ name: name, phone: phone });
+    resetForm();
   };
 
   const handleSubmitForm = e => {
     e.preventDefault();
 
     submitForm(name, phone);
-
-    resetForm();
   };
 
   const resetForm = () => {

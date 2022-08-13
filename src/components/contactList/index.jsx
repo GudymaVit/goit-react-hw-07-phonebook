@@ -9,7 +9,7 @@ import {
 import styles from './contactList.module.css';
 
 const ContactList = () => {
-  const { data } = useGetContactsQuery();
+  const { data, isFetching } = useGetContactsQuery();
   const [deleteContact] = useDeleteContactMutation();
   const filter = useSelector(getFiltered);
 
@@ -25,6 +25,9 @@ const ContactList = () => {
 
   const filteredContacts = filterContacts();
 
+  if (isFetching) {
+    return <p>Loading...</p>;
+  }
   return (
     <ul className={styles.contact_list}>
       {data &&
